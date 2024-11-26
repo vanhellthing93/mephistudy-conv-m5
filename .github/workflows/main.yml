@@ -45,7 +45,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: install, test  # Выполняется после установки зависимостей
+    needs: test  # Выполняется после установки зависимостей
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

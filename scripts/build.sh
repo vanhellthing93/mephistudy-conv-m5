@@ -9,4 +9,12 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
-python app.py
+python app.py &
+
+sleep 5
+
+echo "Есть 2 минуты до завершения работы программы"
+
+sleep 30
+
+kill $! 

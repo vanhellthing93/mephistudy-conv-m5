@@ -1,5 +1,5 @@
 #!/bin/bash
-git clone https://github.com/vanhellthing93/mephistudy-conv-m5
+#git clone https://github.com/vanhellthing93/mephistudy-conv-m5
 
 cd mephistudy-conv-m5
 

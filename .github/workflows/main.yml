@@ -25,7 +25,10 @@ jobs:
 
   # Задача для тестирования
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     needs: install  # Выполняется после установки зависимостей
     steps:
       - name: Checkout code

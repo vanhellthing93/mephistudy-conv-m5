@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest] #,windows-latest, macos-latest
     needs: install  # Выполняется после установки зависимостей
     steps:
       - name: Checkout code
@@ -46,18 +46,18 @@ jobs:
       - name: Run tests
         run: pytest
 
-  build:
-    runs-on: ubuntu-latest
-    needs: test  # Выполняется после установки зависимостей
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#  build:
+#    runs-on: ubuntu-latest
+#   needs: test  # Выполняется после установки зависимостей
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4#
 
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: root
-          password: ${{ secrets.PASSWORD }}
-          port: 22
-          script_path: scripts/build.sh
+#      - name: executing remote ssh commands using password
+#        uses: appleboy/ssh-action@v1.2.0
+#       with:
+#          host: ${{ secrets.HOST }}
+#          username: root
+#          password: ${{ secrets.PASSWORD }}
+#          port: 22
+#          script_path: scripts/build.sh

@@ -3,6 +3,8 @@ version: '3'
 services:
   flask:
     image: ${IMAGE_REF}
+    container_name: flask
+    restart: always
     # environment:
     #   - OPENAI_API_KEY=${OPENAI_API_KEY}
     ports:

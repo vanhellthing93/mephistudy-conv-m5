@@ -24,7 +24,7 @@ jobs:
         uses: arwynfr/actions-docker-context@v2
         with:
           docker_host: 'ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}'
-          context_name: 'dev-server'
+          context_name: 'remote'
           ssh_cert: ${{ secrets.SSH_CERT }}
           ssh_key: ${{ secrets.SSH_KEY }}        
           # run: |
@@ -53,7 +53,7 @@ jobs:
           IMAGE_REF: ${{ steps.meta.outputs.tags }}
           # OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          docker-compose --context remote -f docker-compose.yml up -d
+          docker compose --context remote -f docker-compose.yml up -d
 
       - name: cleanup
         run: rm -rf ~/.ssh

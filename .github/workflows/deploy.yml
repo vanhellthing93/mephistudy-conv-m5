@@ -67,7 +67,7 @@ jobs:
                     # 
                               # docker --context remote stack deploy --compose-file docker-compose.yml my-flask
         run: |
-          docker-compose --context remote -f docker-compose.yml up -d
+          docker compose --context remote -f docker-compose.yml up -d
 
       - name: cleanup
         run: rm -rf ~/.ssh

@@ -5,7 +5,10 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   
 on:
-  workflow_dispatch
+  workflow_run:
+    workflows: [Build and Push Docker Image]
+    types:
+      - completed
 
 jobs:
   deploy:
@@ -20,32 +23,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install ssh keys
-        # uses: arwynfr/actions-docker-context@v2
-        # with:
-        #   docker_host: 'ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}'
-        #   context_name: 'remote'
-        #   ssh_cert: ${{ secrets.SSH_CERT }}
-        #   ssh_key: ${{ secrets.SSH_KEY }}        
+      - name: Install ssh keys   
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
           docker context create remote --docker host=ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}
-
-        #   mkdir -p ~/.ssh/
-        #   echo "$SSH_PRIVATE_KEY" > ../private.key
-        #   sudo chmod 600 ../private.key
-        #   echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-        #   docker context create remote --docker host=ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}
-        # shell: bash
-        # env:
-        #   SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-        #   SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
-        #    # SSH_KEY_PATH: ${{ github.workspace }}/../private.key
-
-        # echo "SSH key installed and known_hosts updated"
-        # echo "Docker context created" ${{ secrets.SSH_HOST }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
